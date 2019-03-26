@@ -18,12 +18,13 @@ public class BibliotecaApp {
     public static List<String> getMenuOptions() {
         List<String> options = new ArrayList<String>();
         options.add("1 - List of books");
+        options.add("\n0 - Exit");
         return options;
     }
 
     public static void printMenuOptions() {
         List<String> menuOptions = BibliotecaApp.getMenuOptions();
-        for (String option: menuOptions) {
+        for (String option : menuOptions) {
             System.out.println(option);
         }
     }
@@ -43,6 +44,8 @@ public class BibliotecaApp {
 
     public static Object chooseOption(int option) {
         switch (option) {
+            case 0:
+                System.exit(0);
             case 1:
                 printBooks();
                 return true;
@@ -60,14 +63,18 @@ public class BibliotecaApp {
 
     public static void main(String[] args) {
         System.out.println(getWelcomeMessage());
-        printMenuOptions();
 
-        Integer option = readOption();
-        if (option != null) {
-            Object selectedOptionResult = chooseOption(option);
-            if (selectedOptionResult instanceof String) {
-                System.out.println(selectedOptionResult);
+        do {
+            printMenuOptions();
+
+            Integer option = readOption();
+            if (option != null) {
+                Object selectedOptionResult = chooseOption(option);
+                if (selectedOptionResult instanceof String) {
+                    System.out.println(selectedOptionResult);
+                }
             }
-        }
+        } while (true);
+
     }
 }
