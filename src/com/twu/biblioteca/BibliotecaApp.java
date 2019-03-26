@@ -12,7 +12,7 @@ public class BibliotecaApp {
     public static void printBooks() {
         BookController bookController = new BookController();
         for (Book book : bookController.list()) {
-            System.out.println(book.getTitle());
+            System.out.println(book);
         }
     }
 
