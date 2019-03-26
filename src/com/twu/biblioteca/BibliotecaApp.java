@@ -7,6 +7,10 @@ import java.util.*;
 
 public class BibliotecaApp {
 
+    public static String getMenuOptionErrorMessage() {
+        return "Please select a valid option!";
+    }
+
     public static String getWelcomeMessage() {
         return "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     }
@@ -31,19 +35,19 @@ public class BibliotecaApp {
         try {
             intOption = Integer.parseInt(option);
         } catch (NumberFormatException numberException) {
-            System.out.println("Only numbers are allowed");
+            System.out.println(getMenuOptionErrorMessage());
             return null;
         }
         return intOption;
     }
 
-    public static boolean chooseOption(int option) {
+    public static Object chooseOption(int option) {
         switch (option) {
             case 1:
                 printBooks();
                 return true;
             default:
-                return false;
+                return getMenuOptionErrorMessage();
         }
     }
 
@@ -59,8 +63,11 @@ public class BibliotecaApp {
         printMenuOptions();
 
         Integer option = readOption();
-        if (option != null && !chooseOption(option)) {
-            System.out.println("This option is not available");
+        if (option != null) {
+            Object selectedOptionResult = chooseOption(option);
+            if (selectedOptionResult instanceof String) {
+                System.out.println(selectedOptionResult);
+            }
         }
     }
 }

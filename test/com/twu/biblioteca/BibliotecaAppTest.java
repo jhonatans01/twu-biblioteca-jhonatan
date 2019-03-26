@@ -34,17 +34,16 @@ public class BibliotecaAppTest {
 
     @Test
     public void shouldChooseMenuOptionWithErrorForNegativeNumber() {
-        assertFalse(BibliotecaApp.chooseOption(-1));
-
+        assertEquals(BibliotecaApp.chooseOption(-1), BibliotecaApp.getMenuOptionErrorMessage());
     }
 
     @Test
     public void shouldChooseMenuOptionWithErrorForNonAvailableOption() {
-        assertFalse(BibliotecaApp.chooseOption(999));
+        assertEquals(BibliotecaApp.chooseOption(999), BibliotecaApp.getMenuOptionErrorMessage());
     }
 
     @Test
     public void shouldChooseMenuOptionWithSuccess() {
-        assertTrue(BibliotecaApp.chooseOption(1));
+        assertTrue(BibliotecaApp.chooseOption(1) instanceof Boolean);
     }
 }
