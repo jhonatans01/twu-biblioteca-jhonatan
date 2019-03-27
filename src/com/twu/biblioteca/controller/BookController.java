@@ -26,7 +26,6 @@ public class BookController {
     }
 
     public Book find(Integer id) {
-        Book bookToFind;
         for (Book book: books) {
             if (book.getId() == id) {
                 return book;
@@ -41,7 +40,7 @@ public class BookController {
 
     public boolean checkout(Book bookToCheckout) {
         for (Book book: books) {
-            if (book.getId() == bookToCheckout.getId()) {
+            if (book.getId() == bookToCheckout.getId() && book.isAvailable()) {
                 book.setAvailable(false);
                 books.set(books.indexOf(book), book);
                 return true;

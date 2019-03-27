@@ -57,7 +57,7 @@ public class BibliotecaApp {
                 if (checkoutBook(getCheckoutBookId())) {
                     return "Thank you! Enjoy the book\n";
                 } else {
-                    return null;
+                    return "Sorry, that book is not available\n";
                 }
             default:
                 return getMenuOptionErrorMessage();
