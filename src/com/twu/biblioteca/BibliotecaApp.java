@@ -22,6 +22,7 @@ public class BibliotecaApp {
         List<String> options = new ArrayList<String>();
         options.add("1 - List of books");
         options.add("2 - Checkout a book");
+        options.add("3 - Return a book");
         options.add("\n0 - Exit");
         return options;
     }
@@ -59,6 +60,8 @@ public class BibliotecaApp {
                 } else {
                     return "Sorry, that book is not available\n";
                 }
+            case 3:
+                return returnBook(getReturnBookId());
             default:
                 return getMenuOptionErrorMessage();
         }
@@ -82,6 +85,21 @@ public class BibliotecaApp {
             Book book = bookController.find(id);
             if (book != null) {
                 return bookController.checkout(book);
+            }
+        }
+        return false;
+    }
+
+    public static Integer getReturnBookId() {
+        System.out.print("Insert the id of the book which you want to return and press enter: ");
+        return readOption();
+    }
+
+    public static boolean returnBook(Integer id) {
+        if (id != null) {
+            Book book = bookController.find(id);
+            if (book != null) {
+                return bookController.returnBook(book);
             }
         }
         return false;

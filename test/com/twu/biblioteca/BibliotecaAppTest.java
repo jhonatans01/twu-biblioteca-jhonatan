@@ -56,4 +56,14 @@ public class BibliotecaAppTest {
     public void shouldCheckoutBook() {
         assertTrue(BibliotecaApp.checkoutBook(1));
     }
+
+    @Test
+    public void shouldNotReturnBook() {
+        assertFalse(BibliotecaApp.returnBook(null));
+    }
+
+    @Test
+    public void shouldReturnBook() {
+        assertTrue(BibliotecaApp.returnBook(1));
+    }
 }

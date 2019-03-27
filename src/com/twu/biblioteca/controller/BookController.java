@@ -39,11 +39,26 @@ public class BookController {
     }
 
     public boolean checkout(Book bookToCheckout) {
-        for (Book book: books) {
-            if (book.getId() == bookToCheckout.getId() && book.isAvailable()) {
-                book.setAvailable(false);
-                books.set(books.indexOf(book), book);
-                return true;
+        if (bookToCheckout != null) {
+            for (Book book: books) {
+                if (book.getId() == bookToCheckout.getId() && book.isAvailable()) {
+                    book.setAvailable(false);
+                    books.set(books.indexOf(book), book);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean returnBook(Book bookToReturn) {
+        if (bookToReturn != null) {
+            for (Book book: books) {
+                if (book.getId() == bookToReturn.getId()) {
+                    book.setAvailable(true);
+                    books.set(books.indexOf(book), book);
+                    return true;
+                }
             }
         }
         return false;
