@@ -46,4 +46,14 @@ public class BibliotecaAppTest {
     public void shouldChooseMenuOptionWithSuccess() {
         assertTrue(BibliotecaApp.chooseOption(1) instanceof Boolean);
     }
+
+    @Test
+    public void shouldNotCheckoutBook() {
+        assertFalse(BibliotecaApp.checkoutBook(null));
+    }
+
+    @Test
+    public void shouldCheckoutBook() {
+        assertTrue(BibliotecaApp.checkoutBook(1));
+    }
 }

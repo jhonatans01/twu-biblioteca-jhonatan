@@ -44,4 +44,29 @@ public class BookControllerTest {
             fail("Books list is empty");
         }
     }
+
+    @Test
+    public void shouldCheckoutABook() {
+        if (!booksList.isEmpty()) {
+            Book singleBook = booksList.get(0);
+            assertTrue(bookController.checkout(singleBook));
+        } else {
+            fail("Books list is empty");
+        }
+    }
+
+    @Test
+    public void shouldCheckoutABookAndSetUnavailable() {
+        if (!booksList.isEmpty()) {
+            Book singleBook = booksList.get(0);
+            bookController.checkout(singleBook);
+
+            booksList = (ArrayList<Book>) bookController.list();
+            singleBook = booksList.get(0);
+
+            assertFalse(singleBook.isAvailable());
+        } else {
+            fail("Books list is empty");
+        }
+    }
 }

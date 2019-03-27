@@ -7,6 +7,9 @@ import java.util.*;
 
 public class BibliotecaApp {
 
+    private static BookController bookController = new BookController();
+
+
     public static String getMenuOptionErrorMessage() {
         return "Please select a valid option!";
     }
@@ -18,6 +21,7 @@ public class BibliotecaApp {
     public static List<String> getMenuOptions() {
         List<String> options = new ArrayList<String>();
         options.add("1 - List of books");
+        options.add("2 - Checkout a book");
         options.add("\n0 - Exit");
         return options;
     }
@@ -49,24 +53,40 @@ public class BibliotecaApp {
             case 1:
                 printBooks();
                 return true;
+            case 2:
+                return checkoutBook(getCheckoutBookId());
             default:
                 return getMenuOptionErrorMessage();
         }
     }
 
     public static void printBooks() {
-        BookController bookController = new BookController();
         for (Book book : bookController.list()) {
-            System.out.println(book);
+            if (book.isAvailable()) {
+                System.out.println(book);
+            }
         }
+    }
+
+    public static Integer getCheckoutBookId() {
+        System.out.print("Insert the id of the book which you want to checkout and press enter: ");
+        return readOption();
+    }
+
+    public static boolean checkoutBook(Integer id) {
+        if (id != null) {
+            Book book = bookController.find(id);
+            if (book != null) {
+                return bookController.checkout(book);
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
         System.out.println(getWelcomeMessage());
-
         do {
             printMenuOptions();
-
             Integer option = readOption();
             if (option != null) {
                 Object selectedOptionResult = chooseOption(option);
@@ -75,6 +95,5 @@ public class BibliotecaApp {
                 }
             }
         } while (true);
-
     }
 }
