@@ -46,6 +46,12 @@ public class BookControllerTest {
     }
 
     @Test
+    public void shouldNotCheckoutABook() {
+        Book singleBook = new Book();
+        assertFalse(bookController.checkout(singleBook));
+    }
+
+    @Test
     public void shouldCheckoutABook() {
         if (!booksList.isEmpty()) {
             Book singleBook = booksList.get(0);
