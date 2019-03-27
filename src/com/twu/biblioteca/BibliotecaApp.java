@@ -54,7 +54,11 @@ public class BibliotecaApp {
                 printBooks();
                 return true;
             case 2:
-                return checkoutBook(getCheckoutBookId());
+                if (checkoutBook(getCheckoutBookId())) {
+                    return "Thank you! Enjoy the book\n";
+                } else {
+                    return null;
+                }
             default:
                 return getMenuOptionErrorMessage();
         }
