@@ -61,7 +61,11 @@ public class BibliotecaApp {
                     return "Sorry, that book is not available\n";
                 }
             case 3:
-                return returnBook(getReturnBookId());
+                if (returnBook(getReturnBookId())) {
+                    return "Thank you for returning the book\n";
+                } else {
+                    return false;
+                }
             default:
                 return getMenuOptionErrorMessage();
         }
