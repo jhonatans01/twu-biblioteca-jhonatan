@@ -64,7 +64,7 @@ public class BibliotecaApp {
                 if (returnBook(getReturnBookId())) {
                     return "Thank you for returning the book\n";
                 } else {
-                    return false;
+                    return "That is not a valid book to return.\n";
                 }
             default:
                 return getMenuOptionErrorMessage();
