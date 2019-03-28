@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 
+import com.twu.biblioteca.util.InputOutputUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,36 +35,16 @@ public class BibliotecaAppTest {
 
     @Test
     public void shouldChooseMenuOptionWithErrorForNegativeNumber() {
-        assertEquals(BibliotecaApp.chooseOption(-1), BibliotecaApp.getMenuOptionErrorMessage());
+        assertEquals(BibliotecaApp.chooseOption(-1), InputOutputUtil.getInvalidOptionErrorMessage());
     }
 
     @Test
     public void shouldChooseMenuOptionWithErrorForNonAvailableOption() {
-        assertEquals(BibliotecaApp.chooseOption(999), BibliotecaApp.getMenuOptionErrorMessage());
+        assertEquals(BibliotecaApp.chooseOption(999), InputOutputUtil.getInvalidOptionErrorMessage());
     }
 
     @Test
     public void shouldChooseMenuOptionWithSuccess() {
         assertTrue(BibliotecaApp.chooseOption(1) instanceof Boolean);
-    }
-
-    @Test
-    public void shouldNotCheckoutBook() {
-        assertFalse(BibliotecaApp.checkoutBook(null));
-    }
-
-    @Test
-    public void shouldCheckoutBook() {
-        assertTrue(BibliotecaApp.checkoutBook(1));
-    }
-
-    @Test
-    public void shouldNotReturnBook() {
-        assertFalse(BibliotecaApp.returnBook(null));
-    }
-
-    @Test
-    public void shouldReturnBook() {
-        assertTrue(BibliotecaApp.returnBook(1));
     }
 }

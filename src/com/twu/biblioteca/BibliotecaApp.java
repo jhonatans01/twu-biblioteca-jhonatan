@@ -1,21 +1,16 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.controller.BookController;
-import com.twu.biblioteca.controller.MovieController;
-import com.twu.biblioteca.model.Book;
-import com.twu.biblioteca.model.Movie;
+import com.twu.biblioteca.util.InputOutputUtil;
+import com.twu.biblioteca.view.BookView;
+import com.twu.biblioteca.view.MovieView;
 
 import java.util.*;
 
 public class BibliotecaApp {
 
-    private static BookController bookController = new BookController();
-    private static MovieController movieController = new MovieController();
+    private static BookView bookView = new BookView();
+    private static MovieView movieView = new MovieView();
 
-
-    public static String getMenuOptionErrorMessage() {
-        return "Please select a valid option!";
-    }
 
     public static String getWelcomeMessage() {
         return "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
@@ -27,6 +22,7 @@ public class BibliotecaApp {
         options.add("2 - Checkout a book");
         options.add("3 - Return a book");
         options.add("4 - List of movies");
+        options.add("5 - Checkout a movie");
         options.add("\n0 - Exit");
         return options;
     }
@@ -38,95 +34,44 @@ public class BibliotecaApp {
         }
     }
 
-    public static Integer readOption() {
-        Scanner reader = new Scanner(System.in);
-        String option = reader.nextLine();
-        int intOption;
-        try {
-            intOption = Integer.parseInt(option);
-        } catch (NumberFormatException numberException) {
-            System.out.println(getMenuOptionErrorMessage());
-            return null;
-        }
-        return intOption;
-    }
-
     public static Object chooseOption(int option) {
         switch (option) {
             case 0:
                 System.exit(0);
             case 1:
-                printBooks();
+                bookView.printBooks();
                 return true;
             case 2:
-                if (checkoutBook(getCheckoutBookId())) {
-                    return "Thank you! Enjoy the book\n";
+                if (bookView.checkoutBook(bookView.getCheckoutBookId())) {
+                    return bookView.checkoutBookSuccessMessage();
                 } else {
-                    return "Sorry, that book is not available\n";
+                    return bookView.checkoutBookErrorMessage();
                 }
             case 3:
-                if (returnBook(getReturnBookId())) {
-                    return "Thank you for returning the book\n";
+                if (bookView.returnBook(bookView.getReturnBookId())) {
+                    return bookView.returnBookSuccessMessage();
                 } else {
-                    return "That is not a valid book to return.\n";
+                    return bookView.returnBookErrorMessage();
                 }
             case 4:
-                printMovies();
+                movieView.printMovies();
                 return true;
+            case 5:
+                if (movieView.checkoutMovie(movieView.getCheckoutMovieId())) {
+                    return movieView.checkoutMovieSuccessMessage();
+                } else {
+                    return movieView.checkoutMovieErrorMessage();
+                }
             default:
-                return getMenuOptionErrorMessage();
+                return InputOutputUtil.getInvalidOptionErrorMessage();
         }
-    }
-
-    public static void printBooks() {
-        for (Book book : bookController.list()) {
-            if (book.isAvailable()) {
-                System.out.println(book);
-            }
-        }
-    }
-
-    public static void printMovies() {
-        for (Movie movie: movieController.list()) {
-            System.out.println(movie);
-        }
-    }
-
-    public static Integer getCheckoutBookId() {
-        System.out.print("Insert the id of the book which you want to checkout and press enter: ");
-        return readOption();
-    }
-
-    public static boolean checkoutBook(Integer id) {
-        if (id != null) {
-            Book book = bookController.find(id);
-            if (book != null) {
-                return bookController.checkout(book);
-            }
-        }
-        return false;
-    }
-
-    public static Integer getReturnBookId() {
-        System.out.print("Insert the id of the book which you want to return and press enter: ");
-        return readOption();
-    }
-
-    public static boolean returnBook(Integer id) {
-        if (id != null) {
-            Book book = bookController.find(id);
-            if (book != null) {
-                return bookController.returnBook(book);
-            }
-        }
-        return false;
     }
 
     public static void main(String[] args) {
         System.out.println(getWelcomeMessage());
         do {
             printMenuOptions();
-            Integer option = readOption();
+            Integer option = InputOutputUtil.readOption();
             if (option != null) {
                 Object selectedOptionResult = chooseOption(option);
                 if (selectedOptionResult instanceof String) {

@@ -1,9 +1,11 @@
 package com.twu.biblioteca.model;
 
 public class Movie {
+    private Integer id;
     private String name;
     private String director;
     private String rating;
+    private boolean available = true;
 
     public Movie() {
     }
@@ -12,6 +14,14 @@ public class Movie {
         this.name = name;
         this.director = director;
         this.rating = rating;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -38,10 +48,19 @@ public class Movie {
         this.rating = rating;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
+        return "id=" + id +
+                ", name='" + name + '\'' +
                 ", director='" + director + '\'' +
-                ", rating=" + rating;
+                ", rating='" + rating + '\'';
     }
 }
