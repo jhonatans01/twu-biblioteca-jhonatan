@@ -1,13 +1,16 @@
 package com.twu.biblioteca;
 
 import com.twu.biblioteca.controller.BookController;
+import com.twu.biblioteca.controller.MovieController;
 import com.twu.biblioteca.model.Book;
+import com.twu.biblioteca.model.Movie;
 
 import java.util.*;
 
 public class BibliotecaApp {
 
     private static BookController bookController = new BookController();
+    private static MovieController movieController = new MovieController();
 
 
     public static String getMenuOptionErrorMessage() {
@@ -23,6 +26,7 @@ public class BibliotecaApp {
         options.add("1 - List of books");
         options.add("2 - Checkout a book");
         options.add("3 - Return a book");
+        options.add("4 - List of movies");
         options.add("\n0 - Exit");
         return options;
     }
@@ -66,6 +70,9 @@ public class BibliotecaApp {
                 } else {
                     return "That is not a valid book to return.\n";
                 }
+            case 4:
+                printMovies();
+                return true;
             default:
                 return getMenuOptionErrorMessage();
         }
@@ -76,6 +83,12 @@ public class BibliotecaApp {
             if (book.isAvailable()) {
                 System.out.println(book);
             }
+        }
+    }
+
+    public static void printMovies() {
+        for (Movie movie: movieController.list()) {
+            System.out.println(movie);
         }
     }
 
