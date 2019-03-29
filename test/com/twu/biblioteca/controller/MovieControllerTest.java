@@ -1,6 +1,5 @@
 package com.twu.biblioteca.controller;
 
-import com.twu.biblioteca.controller.MovieController;
 import com.twu.biblioteca.model.Movie;
 import org.junit.Before;
 import org.junit.Test;

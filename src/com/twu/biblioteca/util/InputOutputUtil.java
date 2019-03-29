@@ -4,12 +4,13 @@ import java.util.Scanner;
 
 public class InputOutputUtil {
 
+    private static Scanner reader = new Scanner(System.in);
+
     public static String getInvalidOptionErrorMessage() {
         return "Please select a valid option!";
     }
 
     public static Integer readOption() {
-        Scanner reader = new Scanner(System.in);
         String option = reader.nextLine();
         int intOption;
         try {
@@ -19,6 +20,10 @@ public class InputOutputUtil {
             return null;
         }
         return intOption;
+    }
+
+    public static String readString() {
+        return reader.nextLine();
     }
 
 }
