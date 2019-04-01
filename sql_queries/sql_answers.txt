@@ -1,0 +1,95 @@
+1. 
+Answer = Anand Beck
+
+
+SELECT name FROM member m
+INNER JOIN checkout_item c ON m.id = c.member_id
+INNER JOIN book b ON b.id = c.book_id
+WHERE b.title = "The Hobbit";
+
+
+
+
+
+2.
+Answer = 37
+
+
+SELECT COUNT(*) FROM member m
+WHERE m.id NOT IN (
+    SELECT c.member_id FROM checkout_item c 
+    INNER JOIN book b ON c.book_id = b.id
+) AND m.id NOT IN (
+    SELECT c.member_id FROM checkout_item c 
+    INNER JOIN movie m ON c.movie_id = m.id
+)
+
+
+
+
+
+3. 
+Answer =
+- Fellowship of the Ring
+- 1984
+- Tom Sawyer
+- Catcher in the Rye
+- To Kill a Mockingbird
+- Domain Driven Design
+- Thin Red Line
+- Crouching Tiger, Hidden Dragon
+- Lawrence of Arabia
+- Office Space
+
+
+SELECT title FROM book
+WHERE id NOT IN (
+    SELECT book_id FROM checkout_item c
+    INNER JOIN book b ON b.id = c.book_id
+)
+
+UNION ALL
+
+SELECT title FROM movie
+WHERE id NOT IN (
+    SELECT movie_id FROM checkout_item c
+    INNER JOIN movie m ON m.id = c.movie_id
+)
+
+
+
+
+
+4.
+Answer = Jhonatan Silva
+
+
+INSERT INTO book VALUES (11, "The Pragmatic Programmer");
+
+INSERT INTO member VALUES(43, "Jhonatan Silva");
+
+INSERT INTO checkout_item (member_id, book_id) VALUES(43, 11);
+
+SELECT name FROM member m
+INNER JOIN checkout_item c ON m.id = c.member_id
+INNER JOIN book b ON b.id = c.book_id
+WHERE b.title = "The Pragmatic Programmer";
+
+
+
+
+
+5. 
+Answer =
+- Anand Beck
+- Frank Smith
+
+
+SELECT name FROM member m,
+(
+    SELECT member_id, COUNT(*) as quantity
+    FROM checkout_item 
+    GROUP BY member_id
+    HAVING quantity > 1
+) as members_query
+WHERE members_query.member_id = m.id
