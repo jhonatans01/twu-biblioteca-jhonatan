@@ -2,7 +2,6 @@ package com.twu.biblioteca;
 
 
 import com.twu.biblioteca.util.InputOutputUtil;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -11,16 +10,12 @@ import static org.junit.Assert.*;
 
 public class BibliotecaAppTest {
 
-    private List<String> menuOptions;
-
-    @Before
-    public void setUp() {
-        menuOptions = BibliotecaApp.getMenuOptions();
-    }
+    private BibliotecaApp app = new BibliotecaApp();
+    private List<String> menuOptions = app.getMenuOptions();
 
     @Test
     public void shouldReturnWelcomeMessage() {
-        assertEquals("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!", BibliotecaApp.getWelcomeMessage());
+        assertEquals("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!", app.getWelcomeMessage());
     }
 
     @Test
@@ -35,16 +30,16 @@ public class BibliotecaAppTest {
 
     @Test
     public void shouldChooseMenuOptionWithErrorForNegativeNumber() {
-        assertEquals(BibliotecaApp.chooseOption(-1), InputOutputUtil.getInvalidOptionErrorMessage());
+        assertEquals(app.chooseOption(-1), InputOutputUtil.getInvalidOptionErrorMessage());
     }
 
     @Test
     public void shouldChooseMenuOptionWithErrorForNonAvailableOption() {
-        assertEquals(BibliotecaApp.chooseOption(999), InputOutputUtil.getInvalidOptionErrorMessage());
+        assertEquals(app.chooseOption(999), InputOutputUtil.getInvalidOptionErrorMessage());
     }
 
     @Test
     public void shouldChooseMenuOptionWithSuccess() {
-        assertTrue(BibliotecaApp.chooseOption(1) instanceof Boolean);
+        assertTrue(app.chooseOption(1) instanceof Boolean);
     }
 }

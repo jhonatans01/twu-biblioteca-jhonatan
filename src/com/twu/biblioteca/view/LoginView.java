@@ -1,13 +1,13 @@
 package com.twu.biblioteca.view;
 
-import com.twu.biblioteca.controller.UserController;
+import com.twu.biblioteca.controller.UserProfileController;
 import com.twu.biblioteca.model.User;
 import com.twu.biblioteca.util.InputOutputUtil;
 import com.twu.biblioteca.util.LoginUtil;
 
 public class LoginView {
 
-    private static UserController userController = new UserController();
+    private static UserProfileController userProfileController = new UserProfileController();
     private static LoginUtil session;
 
     public LoginView() {
@@ -18,7 +18,7 @@ public class LoginView {
         String libraryNumber = getLibraryNumber();
         String password = getPassword();
 
-        User user = userController.find(libraryNumber, password);
+        User user = userProfileController.find(libraryNumber, password);
         if (user != null) {
             session.setUser(user);
             return true;

@@ -6,6 +6,7 @@ import com.twu.biblioteca.util.LoginUtil;
 import com.twu.biblioteca.view.BookView;
 import com.twu.biblioteca.view.LoginView;
 import com.twu.biblioteca.view.MovieView;
+import com.twu.biblioteca.view.ProfileView;
 
 import java.util.*;
 
@@ -14,13 +15,19 @@ public class BibliotecaApp {
     private static BookView bookView = new BookView();
     private static MovieView movieView = new MovieView();
     private static LoginView loginView = new LoginView();
+    private static ProfileView profileView = new ProfileView();
     private static LoginUtil session;
 
-    public static String getWelcomeMessage() {
+    public BibliotecaApp() {
+        session = session.getInstance();
+    }
+
+    public String getWelcomeMessage() {
         return "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     }
 
-    public static List<String> getMenuOptions() {
+    public List<String> getMenuOptions() {
+        User user = session.getUser();
         List<String> options = new ArrayList<String>();
         options.add("1 - List of available books");
         options.add("2 - Checkout a book");
@@ -28,25 +35,28 @@ public class BibliotecaApp {
         options.add("4 - List of movies");
         options.add("5 - Checkout a movie");
         options.add("6 - List of checked out books");
+        if (user != null) {
+            options.add("7 - View profile information");
+        }
         options.add("\n0 - Exit");
         return options;
     }
 
-    public static void printMenuOptions() {
-        List<String> menuOptions = BibliotecaApp.getMenuOptions();
+    public void printMenuOptions() {
+        List<String> menuOptions = getMenuOptions();
         for (String option : menuOptions) {
             System.out.println(option);
         }
     }
 
-    public static void authenticate() {
+    public void authenticate() {
         while (!loginView.authenticate()) {
             System.out.println(loginView.authenticateErrorMessage());
         }
         System.out.println(loginView.authenticateSuccessMessage());
     }
 
-    public static Object chooseOption(int option) {
+    public Object chooseOption(int option) {
         User user;
 
         switch (option) {
@@ -91,6 +101,15 @@ public class BibliotecaApp {
             case 6:
                 bookView.printCheckedOutBooks();
                 return true;
+            case 7:
+                user = session.getUser();
+                if (user == null) {
+                    authenticate();
+                    return chooseOption(7);
+                } else {
+                    profileView.printInformation(user);
+                    return true;
+                }
 
             default:
                 return InputOutputUtil.getInvalidOptionErrorMessage();
@@ -98,13 +117,14 @@ public class BibliotecaApp {
     }
 
     public static void main(String[] args) {
-        session = session.getInstance();
-        System.out.println(getWelcomeMessage());
+        BibliotecaApp app = new BibliotecaApp();
+
+        System.out.println(app.getWelcomeMessage());
         do {
-            printMenuOptions();
+            app.printMenuOptions();
             Integer option = InputOutputUtil.readOption();
             if (option != null) {
-                Object selectedOptionResult = chooseOption(option);
+                Object selectedOptionResult = app.chooseOption(option);
                 if (selectedOptionResult instanceof String) {
                     System.out.println(selectedOptionResult);
                 }
